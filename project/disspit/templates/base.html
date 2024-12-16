@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Debate Network{% endblock %}</title>
+    <link rel="stylesheet" href="static/style0.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="navbar">
+        <div class="navbar-left">
+            <img src="static/images/icon.png" alt="Logo" class="logo">
+        </div>
+        <div class="navbar-right">
+            <span class="icon search-icon">🔍</span>
+            <span class="icon bell-icon">🔔</span>
+            <span class="icon profile-icon">👤</span>
+        </div>
+    </header>
+
+
+    <div class="layout">
+        {% if notform %}
+            <aside class="sidebar">
+                <div class="sidebar-item">Boards</div>
+                <div class="sidebar-item">Stuff</div>
+            </aside>
+        {% endif %}
+        <!-- Main Content -->
+        <main class="content">
+            {% block main %}
+            <!-- Default content if not overridden -->
+            {% endblock %}
+        </main>
+    </div>
+
+    <div class="chat-icon">
+        💬
+    </div>
+    {% block bottom %}
+    {% endblock %}
+</body>
+</html>
