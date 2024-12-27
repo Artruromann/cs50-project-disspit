@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Board</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .header {
+      background: #8a4bf1;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+    }
+
+    .header .logo {
+      display: flex;
+      align-items: center;
+
+    }
+
+    .header .logo img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+
+    .header .logo span {
+      margin-left: 10px;
+    }
+
+    .header .icons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .header .icons div {
+      width: 30px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .main {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      flex: 1;
+      overflow: auto;
+    }
+
+    .sidebar-left {
+      background: #f5f5f5;
+      border-right: 1px solid #ddd;
+      padding: 20px;
+    }
+
+    .sidebar-left ul {
+      list-style: none;
+    }
+
+    .sidebar-left ul li {
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+
+    .form-container {
+      padding: 20px;
+    }
+
+    .form-container h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .info-icon {
+      display: inline-block;
+      margin-left: 5px;
+      cursor: pointer;
+      color: #8a4bf1;
+      position: relative;
+    }
+
+    .info-tooltip {
+      display: none;
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      padding: 10px;
+      font-size: 12px;
+      border-radius: 5px;
+      width: 200px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .info-icon:hover .info-tooltip {
+      display: block;
+    }
+
+    .toggle-section {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .form-actions {
+      margin-top: 20px;
+    }
+
+    .form-actions button {
+      background: #8a4bf1;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <a href="/home">
+          <img src="static/images/icon.png" alt="Logo">
+        </a>
+        <div>🔍</div>
+      </div>
+      <div class="icons">
+        <div>🔔</div>
+        <a href="/logout" style="text-decoration: none;"><div>👤</div></a>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+      <!-- Sidebar -->
+      <div class="sidebar-left">
+        <ul>
+          <li>my boards</li>
+          <li>Stuff</li>
+        </ul>
+      </div>
+
+      <!-- Form -->
+      <div class="form-container">
+        <h2>Create a New Board</h2>
+
+        <div class="form-group">
+          <label>Board Type</label>
+          <select id="boardType">
+            <option value="chat">Chat</option>
+            <option value="forum">Forum</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Board Name</label>
+          <input type="text" placeholder="Enter board name">
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea placeholder="Enter description"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Diss Mode 
+            <span class="info-icon">
+              i
+              <span class="info-tooltip">
+                Diss mode warning: Activating diss mode you allow users to insult each other in the chat. Do it at your own risk, Disspit doesn’t take responsibility for insults that may affect users' sensibilities.
+              </span>
+            </span>
+          </label>
+          <input type="checkbox">
+        </div>
+
+        <div class="form-group">
+          <label>Visible 
+            <span class="info-icon">
+              i
+              <span class="info-tooltip">Board is visible to the public</span>
+            </span>
+          </label>
+          <input type="checkbox">
+        </div>
+
+        <div class="form-group">
+          <label>Sensitive Content 
+            <span class="info-icon">
+              i
+              <span class="info-tooltip">Page may contain sensitive content</span>
+            </span>
+          </label>
+          <input type="checkbox">
+        </div>
+
+        <div class="form-group">
+          <label>Topics</label>
+          <select>
+            <option value="philosophy">Philosophy</option>
+            <option value="politics">Politics</option>
+            <option value="science">Science</option>
+            <option value="technology">Technology</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Advanced 
+            <button id="toggleAdvanced">▲</button>
+          </label>
+          <div class="toggle-section" id="advancedOptions">
+            <div class="form-group">
+              <label>Message Rate Limit</label>
+              <input type="number" value="3">
+            </div>
+            <div class="form-group">
+              <label>Message Delay (s)</label>
+              <input type="number" value="8">
+            </div>
+            <div class="form-group">
+              <label>Turn-Based</label>
+              <input type="checkbox" id="turnBased">
+            </div>
+            <div class="form-group" id="turnTimeSection">
+              <label>Turn Time (min)</label>
+              <input type="number" value="2">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button><a href ="/chatboard">Create Board</a></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const boardType = document.getElementById('boardType');
+    const advancedOptions = document.getElementById('advancedOptions');
+    const toggleAdvanced = document.getElementById('toggleAdvanced');
+    const turnBased = document.getElementById('turnBased');
+    const turnTimeSection = document.getElementById('turnTimeSection');
+
+    // Toggle advanced options
+    toggleAdvanced.addEventListener('click', () => {
+      advancedOptions.style.display = advancedOptions.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Show/hide advanced settings based on board type
+    boardType.addEventListener('change', () => {
+      if (boardType.value === 'forum') {
+        advancedOptions.style.display = 'none';
+      }
+    });
+
+    // Show/hide turn time section based on turn-based checkbox
+    turnBased.addEventListener('change', () => {
+      turnTimeSection.style.display = turnBased.checked ? 'block' : 'none';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Debate Network{% endblock %}</title>
+    {% block styles %}
+    {% endblock %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js" integrity="sha512-8BHxHDLsOHx+flIrQ0DrZcea7MkHqRU5GbTHmbdzMRnAaoCIkZ97PqZcXJkKZckMMhqfoeaJE+DNUVuyoQsO3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    
+    <!-- Header -->
+    <header class = "navbar">
+    {% block header %}
+    
+    {% endblock %}
+    </header>
+
+
+    <div class="layout">
+        {%block sidebar %}
+        {% endblock %}
+        <!-- Main Content -->
+        <main class="content">
+            {% block main %}
+            <!-- Default content if not overridden -->
+            {% endblock %}
+        </main>
+    </div>
+    
+    
+    {% block scripts %}
+    {% endblock %}
+    
+
+    {% block mss %}
+    {% endblock %}
+
+    {% block bottom %}
+    {% endblock %}
+
+    
+</body>
+</html>

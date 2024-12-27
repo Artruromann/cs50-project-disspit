@@ -1,0 +1,35 @@
+{% extends 'notlogged.html' %}
+{% block page_title %}
+    Log In
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="static/style0.css">
+{% endblock %}
+>
+{% block main %}
+    <div class="login-container">
+        <!-- Left Section -->
+        <div class="login-left">
+            <form method="POST" action="/login" class="login-form">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit" class="login-btn">Log In</button>
+            </form>
+        </div>
+
+        <!-- Right Section -->
+        <div class="login-right">
+            <h1 class="logo-title">DISSPIT</h1>
+            <div class="logo-box">
+                <img src="static/images/icon.png" alt="Logo">
+            </div>
+            <p class="enter-debate">ENTER THE DEBATE!</p>
+        </div>
+    </div>
+{% endblock %}
+{% block bottom %}
+    <div class="footer">
+        <p>Disspit 2024 &nbsp; | &nbsp; <a href="#">About Disspit</a></p>
+    </div>
+{% endblock %}

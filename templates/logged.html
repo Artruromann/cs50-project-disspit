@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}
+    home
+{% endblock %}
+    
+{% block styles %}
+<link rel="stylesheet" href="static/style0.css">
+{% endblock %}
+
+{% block header %}
+<div class="navbar-left">
+    <a href="/home" style="text-decoration: none;"> <img src="static/images/icon.png" alt="Logo" class="logo"></a>
+    <span class="icon search-icon">🔍</span>
+</div>
+<div class="navbar-right">
+    <a href="/newboard" style="text-decoration: none;"> <img src="static/images/createicon.png" alt="Logo" class="logo"></a>
+    <span class="icon bell-icon">🔔</span>
+    <a href="/logout" style="text-decoration: none;"><span class="icon profile-icon">👤</span></a>
+</div>
+    
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<aside class="sidebar">
+    <div class="sidebar-item">Boards</div>
+    <div class="sidebar-item">Stuff</div>
+</aside>
+{% endblock %}
+
+{% block main %}
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block mss%}
+<a href ="/chats" class="chat-icon">
+    💬
+</a>
+{% endblock %}
+
+    
+

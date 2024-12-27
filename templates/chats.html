@@ -1,0 +1,313 @@
+{% extends 'base.html' %}
+{% block title %}
+    disspit
+{% endblock %}
+
+{% block styles %}
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  .container {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr 1fr 2fr;
+    height: 100vh;
+  }
+
+  /* Header */
+  .header {
+    grid-column: 1 / span 3;
+    background: #8a4bf1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+  }
+
+  .header .logo {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .header .logo img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  .header .icons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .header .icons img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+
+  /* Sidebar Left */
+  .sidebar-left {
+    padding: 20px;
+    border-right: 1px solid #ddd;
+  }
+
+  .sidebar-left ul {
+    list-style: none;
+  }
+
+  .sidebar-left ul li {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+  }
+
+  /* Chat List Section */
+  .chat-list {
+    background: #ffffff;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+  }
+
+  .chat-list h2 {
+    margin-bottom: 15px;
+    font-size: 24px;
+    color: #333;
+  }
+
+  .chat-list ul {
+    list-style: none;
+  }
+
+  .chat-list ul li {
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .chat-list ul li:hover {
+    background: #eee;
+  }
+
+  .chat-list ul li.active {
+    background: #e1d5f8;
+  }
+
+  /* Chat Section */
+  .chat-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+  }
+
+  .chat-section .messages {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 20px;
+    overflow-y: auto;
+    max-height: 400px;
+  }
+
+  .chat-section .messages .mymsg {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    background-color: rgb(223, 120, 255);
+    color: white;
+    max-width: 60%;
+    margin-left: auto;
+    text-align: right;
+  }
+
+  .chat-section .messages .othermsg {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    background-color: rgb(168, 239, 234);
+    color: black;
+    max-width: 60%;
+    margin-right: auto;
+    text-align: left;
+  }
+
+  /* Footer */
+  .footer {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-top: 1px solid #ddd;
+  }
+
+  .footer input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+  }
+
+  .footer button {
+    background: #8a4bf1;
+    border: none;
+    color: white;
+    border-radius: 50%;
+    padding: 10px 15px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <a href="/home">
+        <img src="static/images/icon.png" alt="Logo">
+      </a>
+      <a>🔍</a>
+    </div>
+    <div class="icons">
+      <a href="/newboard">
+        <img src="static/images/createicon.png" alt="Create">
+      </a>
+      🔔
+      <a href="/logout">👤</a>
+    </div>
+  </div>
+
+  <!-- Sidebar Left -->
+  <div class="sidebar-left">
+    <ul>
+      <li>my boards</li>
+      <li>Stuff</li>
+    </ul>
+  </div>
+
+  <!-- Chat List Section -->
+  <div class="chat-list">
+    <h2>chats</h2>
+    <ul id = "chatlist-ul">
+      {% for i in range(friendslen) %}
+        {% if chatlist[i]["userid1"] == userid %}
+          <li id = "{{chatlist[i]['userid2']}}"> {{ chatlist[i]["username2"] }}</li>
+        {% else %}
+          <li id = "{{chatlist[i]['userid1']}}"> {{ chatlist[i]["username1"] }}</li>
+        {% endif %}
+        
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- Chat Section -->
+  <div class="chat-section" style = "display:none;">
+    <div class="messages">
+      <!-- <div class="othermsg">friend 1: Hi there!</div>
+      <div class="mymsg">You: Hello!</div> -->
+
+
+    </div>
+    <div class="footer">
+      <input type="text" placeholder="Send a message">
+      <button id = "sendbtn">➤</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const socket = io({autoConnect: false});
+    socket.connect();
+
+    user = "{{ userid }}";
+
+    socket.on("connect", function() {
+          socket.emit("user_join");
+    });
+
+    $("#chatlist-ul").on("click", "li", function() {
+
+
+      const frienduser = $(this).text();
+
+      console.log("Selected chat:", frienduser);
+      $("#chatlist-ul li").removeClass("active");
+      $(this).addClass("active");
+
+      $(".messages").empty();
+      
+
+      $(".chat-section").show();
+      socket.emit("load messages", $(this).attr("id"));
+
+
+    });
+
+    $("#sendbtn").click(function() {
+      let message = $(".footer input").val();
+      const frienduser = $(".chat-list ul li.active").text(); // Get the active chat
+      const friendid = $(".chat-list ul li.active").attr("id"); // Get the chat ID
+
+      socket.emit("new message", message, frienduser, friendid );
+      $(".footer input").val("");
+    });
+
+
+    socket.on("chat", function(data){
+
+      let msgclass = data["receiverid"] == user ? "othermsg" : "mymsg";
+      $(".messages").append($("<div>").addClass(msgclass).text(data["message"]));
+      $(".messages").scrollTop($(".messages")[0].scrollHeight);
+
+      console.log("Chat message received:", data);
+    });
+
+    socket.on("print messages", function(chatmessages) {
+
+      const msgcontainer = $(".messages");
+      const fragment = $(document.createDocumentFragment())
+
+      for (let i = 0; i < chatmessages.length; i++) {
+        const message = chatmessages[i];
+        let msgclass = "";
+
+        console.log("User:", user);
+
+        if(message["senderid"] == user){
+          msgclass = "mymsg";
+        } else {
+          msgclass = "othermsg";
+        }
+
+        fragment.append($("<div>").addClass(msgclass).text(message["content"]));
+      }
+
+      msgcontainer.append(fragment);
+      msgcontainer.scrollTop(msgcontainer[0].scrollHeight);
+       
+    });
+    
+    
+
+</script>
+{% endblock %}
+
